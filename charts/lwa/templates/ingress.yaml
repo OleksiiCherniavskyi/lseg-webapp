@@ -1,0 +1,35 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "lwa.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "lwa.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/backend-protocol: HTTP
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/backend-protocol-version: HTTP1
+    alb.ingress.kubernetes.io/healthcheck-path: /me
+    alb.ingress.kubernetes.io/certificate-arn:  arn:aws:acm:us-west-2:033379543890:certificate/ccea104e-cb54-4e6e-b116-232fb47c1d9c 
+    alb.ingress.kubernetes.io/inbound-cidrs: 185.63.117.0/29,216.251.118.195/32,173.209.95.237/32,173.209.86.150/32,185.63.119.111/32,176.126.62.59/32,176.126.62.189/32
+spec:
+  tls:
+  - hosts:
+    - lseg-web-app.ua-devops.com
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: {{ $svcPort }}
+  {{- end }}
