@@ -77,7 +77,7 @@ spec:
     }
     stage('Helm Deploy') {
       steps {
-        container('helm-operator') {
+        container(name: 'helm-operator', shell: '/bin/bash -x' ) {
           script {
             dir ("charts") {
             sh "if [ -d /root/.aws ]; then echo "directory already exist"; else mkdir /root/.aws; fi"
