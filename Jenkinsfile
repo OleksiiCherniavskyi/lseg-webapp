@@ -1,34 +1,24 @@
-properties([pipelineTriggers([githubPush()])])
- 
-pipeline {
-    /* specify nodes for executing */
-    agent any
- 
-    stages {
-        /* checkout repo */
-        stage('Checkout SCM') {
-            steps {
-                checkout([
-                 $class: 'GitSCM',
-                 branches: [[name: 'master']],
-                 userRemoteConfigs: [[
-                    url: 'https://github.com/OleksiiCherniavskyi/lseg-webapp.git',
-                    credentialsId: 'gh',
-                 ]]
-                ])
-            }
-        }
-         stage('Do the deployment') {
-            steps {
-                echo ">> Run deploy applications "
-            }
+node {
+    def app
+
+    stage('Clone repository') {
+        checkout scm
+    }
+
+    stage('Build image') {
+       app = docker.build("iuad16s1/lseg-webapp")
+    }
+
+    stage('Test image') {
+        app.inside {
+            sh 'echo "Tests passed"'
         }
     }
- 
-    /* Cleanup workspace */
-    post {
-       always {
-           deleteDir()
-       }
-   }
+
+    stage('Push image') {
+        docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+        }
+    }
 }
