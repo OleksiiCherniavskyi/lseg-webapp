@@ -7,6 +7,7 @@ pipeline {
         steps {
           container('docker') {
             sh 'docker build -t iuad16s1/lseg-webapp:$BUILD_NUMBER .'
+          }
         }
       }
       stage('Push') {
