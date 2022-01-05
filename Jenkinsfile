@@ -80,9 +80,9 @@ spec:
         container(name: 'helm-operator') {
           script {
             dir ("charts") {
-            sh "if [ -d ~/.aws ]; then echo "directory already exist"; else mkdir ~/.aws; fi"
-            sh "echo \"[$AWS_DEFAULT_PROFILE]\" > ~/.aws/credentials && echo \"aws_access_key_id = $AWS_ACCESS_KEY_ID\" >> ~/.aws/credentials && echo \"aws-secret-access-key = $AWS_SECRET_ACCESS_KEY\" >> ~/.aws/credentials"
-            sh "echo \"[profile $AWS_DEFAULT_PROFILE]\" > ~/.aws/config && echo \"region = us-west-2\" >> ~/.aws/config && echo \"output = json\""
+            sh "if [ -d /root/.aws ]; then echo "directory already exist"; else mkdir /root/.aws; fi"
+            sh "echo \"[$AWS_DEFAULT_PROFILE]\" > /root/.aws/credentials && echo \"aws_access_key_id = $AWS_ACCESS_KEY_ID\" >> /root/.aws/credentials && echo \"aws-secret-access-key = $AWS_SECRET_ACCESS_KEY\" >> /root/.aws/credentials"
+            sh "echo \"[profile $AWS_DEFAULT_PROFILE]\" > /root/.aws/config && echo \"region = us-west-2\" >> /root/.aws/config && echo \"output = json\""
             sh "aws eks --region us-west-2 update-kubeconfig --name lseg-eks-T9gWKSdV"
             sh "export KUBECONFIG=/root/.kube/config"
             sh "if [[ $BUILD_NUMBER -gt 1 ]]; then helm install lseg-web-app lwa; else helm upgrade lseg-web-app lwa; fi"
