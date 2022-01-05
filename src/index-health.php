@@ -1,12 +1,12 @@
 <?php
-$app = getenv('APP');
+$env = getenv('ENV');
 echo "
 <html>
   <head>
     <title>LSEG STATUS</title>
   </head>
   <body>
-    <h2>OK ".$app."</h2>
+    <h2>OK ".$env."</h2>
   </body>
 </html>";
 ?>
