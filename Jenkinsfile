@@ -78,7 +78,7 @@ spec:
     stage('Helm Deploy') {
       steps {
         container(name: 'helm-operator', shell: '/bin/bash' ) {
-         '''#!/bin/bash if [ -d /root/.aws ]; then echo "directory already exist"; else mkdir /root/.aws; fi"
+          sh '''#!/bin/bash if [ -d /root/.aws ]; then echo "directory already exist"; else mkdir /root/.aws; fi"
             echo "[$AWS_DEFAULT_PROFILE]" > /root/.aws/credentials && \
             echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> /root/.aws/credentials && \
             echo "aws-secret-access-key = $AWS_SECRET_ACCESS_KEY" >> /root/.aws/credentials" && \
