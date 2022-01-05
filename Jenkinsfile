@@ -79,7 +79,7 @@ spec:
       steps {
         container(name: 'helm-operator', shell: '/bin/bash' ) {
           withEnv(['PATH+EXTRA=/']) {
-            sh "if [ -d /root/.aws ]; then echo "directory already exist"; else mkdir /root/.aws; fi"
+            sh "#!/bin/bash -xe if [ -d /root/.aws ]; then echo "directory already exist"; else mkdir /root/.aws; fi"
             sh "echo \"[$AWS_DEFAULT_PROFILE]\" > /root/.aws/credentials && echo \"aws_access_key_id = $AWS_ACCESS_KEY_ID\" >> /root/.aws/credentials && echo \"aws-secret-access-key = $AWS_SECRET_ACCESS_KEY\" >> /root/.aws/credentials"
             sh "echo \"[profile $AWS_DEFAULT_PROFILE]\" > /root/.aws/config && echo \"region = us-west-2\" >> /root/.aws/config && echo \"output = json\""
             sh "aws eks --region us-west-2 update-kubeconfig --name lseg-eks-T9gWKSdV"
