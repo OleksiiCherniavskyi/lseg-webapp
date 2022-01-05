@@ -38,3 +38,13 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: APP
+              valueFrom:
+                configMapKeyRef:
+                  name: lseg-config
+                  key: env
+            - name: ENV
+              valueFrom: 
+                fieldRef:
+                  fieldPath: metadata.name
