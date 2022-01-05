@@ -9,10 +9,9 @@ volumes: [
  node(label) {
    stage('Stage 1: Build with Kaniko') {
      container('kaniko') {
-       sh 'docker login; /kaniko/executor --context=git://github.com/OleksiiCherniavskyi/lseg-webapp.git \
+       sh '/kaniko/executor --context=git://github.com/OleksiiCherniavskyi/lseg-webapp.git \
                --destination=docker.io/iuad16s1/lseg-webapp:$BUILD_NUMBER \
                --insecure \
-               --skip-tls-verify  \
                -v=debug'
      }
    }
