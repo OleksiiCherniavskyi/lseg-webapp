@@ -1,7 +1,7 @@
 def label = "goweb-1.$BUILD_NUMBER-pipeline"
  
 podTemplate(label: label, containers: [
- containerTemplate(name: 'kaniko', image: 'gcr.io/kaniko-project/executor:debug', command: '/busybox/cat', ttyEnabled: true)
+ containerTemplate(name: 'kaniko', image: 'gcr.io/kaniko-project/executor:51734fc3a33e04f113487853d118608ba6ff2b81', command: '/busybox/cat', ttyEnabled: true)
 ],
 volumes: [
    secretVolume(mountPath: '/root/.docker/', secretName: 'dockercred')
