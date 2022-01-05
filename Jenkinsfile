@@ -1,22 +1,20 @@
-#!groovy
-
-pipeline {
-  agent none
-  stages {
-    stage('Docker Build') {
-      agent any
-      steps {
-        sh 'docker build -t iuad16s1/lseg-webapp:latest .'
-      }
-    }
-    stage('Docker Push') {
-      agent any
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DockerHubPassword', usernameVariable: 'DockerHubUser')]) {
-          sh "docker login -u ${env.DockerHubUser} -p ${env.DockerHubPassword}"
-          sh 'docker build -t iuad16s1/lseg-webapp:latest'
-        }
-      }
-    }
-  }
+def label = "goweb-1.$BUILD_NUMBER-pipeline"
+ 
+podTemplate(label: label, containers: [
+ containerTemplate(name: 'kaniko', image: 'gcr.io/kaniko-project/executor:debug', command: '/busybox/cat', ttyEnabled: true)
+],
+volumes: [
+   secretVolume(mountPath: '/root/.docker/', secretName: 'dockercred')
+]) {
+ node(label) {
+   stage('Stage 1: Build with Kaniko') {
+     container('kaniko') {
+       sh '/kaniko/executor --context=git://github.com/OleksiiCherniavskyi/lseg-webapp.git \
+               --destination=iuad16s1/lseg-webapp:$BUILD_NUMBER \
+               --insecure \
+               --skip-tls-verify  \
+               -v=debug'
+     }
+   }
+ }
 }
