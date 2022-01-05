@@ -18,6 +18,10 @@ spec:
   containers:
   - name: helm-operator
     image: iuad16s1/helm-operator:0.3
+    imagePullPolicy: IfNotPresent
+    command:
+    - top
+    tty: true
   - name: kaniko
     image: gcr.io/kaniko-project/executor:v1.5.1-debug
     imagePullPolicy: IfNotPresent
