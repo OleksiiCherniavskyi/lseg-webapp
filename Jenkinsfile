@@ -3,16 +3,6 @@
 pipeline {
   agent none
   stages {
-    stage('Run in centos') {
-      agent {
-        docker {
-          image 'centos:latest'
-        }
-      }
-      steps {
-        sh 'docker --version'
-      }
-    }
     stage('Docker Build') {
       agent any
       steps {
