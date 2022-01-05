@@ -1,24 +1,32 @@
-node {
-    def app
+#!groovy
 
-    stage('Clone repository') {
-        checkout scm
-    }
-
-    stage('Build image') {
-        app = docker.build("iuad16s1/lseg-webapp")
-    }
-
-    stage('Test image') {
-        app.inside {
-            sh 'echo "Tests passed"'
+pipeline {
+  agent none
+  stages {
+    stage('Run in centos') {
+      agent {
+        docker {
+          image 'centos:latest'
         }
+      }
+      steps {
+        sh 'docker --version'
+      }
     }
-
-    stage('Push image') {
-        docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+    stage('Docker Build') {
+      agent any
+      steps {
+        sh 'docker build -t iuad16s1/lseg-webapp:latest .'
+      }
+    }
+    stage('Docker Push') {
+      agent any
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DockerHubPassword', usernameVariable: 'DockerHubUser')]) {
+          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+          sh 'docker push iuad16s1/lseg-webapp:latest'
         }
+      }
     }
+  }
 }
