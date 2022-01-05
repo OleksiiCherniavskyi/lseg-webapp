@@ -6,9 +6,7 @@ node {
     }
 
     stage('Build image') {
-        app.inside {
-            sh 'docker build -t iuad16s1/lseg-webapp .'
-        }
+        app = docker.build("iuad16s1/lseg-webapp")
     }
 
     stage('Test image') {
