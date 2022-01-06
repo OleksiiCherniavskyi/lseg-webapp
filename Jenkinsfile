@@ -17,7 +17,7 @@ metadata:
 spec:
   containers:
   - name: helm-operator
-    image: iuad16s1/helm-operator:0.7
+    image: iuad16s1/helm-operator:0.8
     imagePullPolicy: IfNotPresent
     command:
     - top
