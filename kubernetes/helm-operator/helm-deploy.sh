@@ -19,7 +19,7 @@ export KUBECONFIG=/root/.kube/config
 helm lint charts/lwa -n web-apps
 helm show all charts/lwa -n web-apps
 
-if [[ $BUILD_NUMBER -gt 1 ]] && [[  ]]
+if [[ $BUILD_NUMBER -gt 1 ]]
 then
     helm upgrade lseg-web-app charts/lwa -n web-apps
 
