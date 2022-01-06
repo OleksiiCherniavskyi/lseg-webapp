@@ -16,8 +16,8 @@ aws eks --region us-west-2 update-kubeconfig --name lseg-eks-T9gWKSdV;
 sed -i "s/jenkins_build_number/$BUILD_NUMBER/g" charts/lwa/values.yaml
 export KUBECONFIG=/root/.kube/config;
 
-helm lint charts/lwa
-helm show all charts/lwa
+helm lint charts/lwa -n web-apps
+helm show all charts/lwa -n web-apps
 
 if [[ $BUILD_NUMBER -gt 1 ]]
 then
