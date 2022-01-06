@@ -86,7 +86,7 @@ spec:
             echo "region = us-west-2" >> /root/.aws/config; echo "output = json" >> /root/.aws/config; \
             aws eks --region us-west-2 update-kubeconfig --name lseg-eks-T9gWKSdV; \
             export KUBECONFIG=/root/.kube/config; \
-            if [[ $BUILD_NUMBER -gt 1 ]]; then helm upgrade lseg-web-app charts/lwa; else helm install lseg-web-app charts/lwa; fi
+            if [[ $BUILD_NUMBER -gt 1 ]]; then helm upgrade lseg-web-app charts/lwa -n default; else helm install lseg-web-app charts/lwa -n default; fi
          '''
         }
       }
