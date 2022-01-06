@@ -17,13 +17,25 @@ sed -i "s/jenkins_build_number/$BUILD_NUMBER/g" charts/lwa/values.yaml
 export KUBECONFIG=/root/.kube/config;
 
 helm lint charts/lwa
-helm show charts/lwa
+helm show all charts/lwa
 
 if [[ $BUILD_NUMBER -gt 1 ]]
 then
     helm upgrade lseg-web-app charts/lwa -n web-apps
+
+    if [[ $? -eq 1 ]]; 
+    then
+        echo "Something went wrong...";
+        exit 1
+    fi
 else
     helm install lseg-web-app charts/lwa -n web-apps
+
+    if [[ $? -eq 1 ]]; 
+    then
+        echo "Something went wrong...";
+        exit 1
+    fi
 fi
 
 sleep 30
