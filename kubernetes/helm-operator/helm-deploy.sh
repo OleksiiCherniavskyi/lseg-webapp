@@ -16,17 +16,18 @@ aws eks --region us-west-2 update-kubeconfig --name lseg-eks-T9gWKSdV
 sed -i "s/jenkins_build_number/$BUILD_NUMBER/g" charts/lwa/values.yaml
 export KUBECONFIG=/root/.kube/config
 
-helm lint charts/lwa -n web-apps
-helm show all charts/lwa -n web-apps
+kubectl config set-context --current --namespace=web-apps
+helm lint charts/lwa
+helm show all charts/lwa
 
 if [[ $BUILD_NUMBER -gt 1 ]]
 then
-    helm upgrade lseg-web-app charts/lwa -n web-apps
+    helm upgrade lseg-web-app charts/lwa
 
     if [[ $? -eq 1 ]]; 
     then
         echo "Trying to install rather than to upgrade..."
-        helm install lseg-web-app charts/lwa -n web-apps
+        helm install lseg-web-app charts/lwa
         
         if [[ $? -eq 1 ]];
         then
@@ -35,7 +36,7 @@ then
         fi
     fi
 else
-    helm install lseg-web-app charts/lwa -n web-apps
+    helm install lseg-web-app charts/lwa
 
     if [[ $? -eq 1 ]]; 
     then
