@@ -1,8 +1,8 @@
-replicaCount: 8
+replicaCount: 4 
 image:
   repository: "iuad16s1/lseg-webapp"
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: "$BUILD_NUMBER"
 
 nameOverride: ""
 fullnameOverride: ""
