@@ -2,7 +2,7 @@ replicaCount: 4
 image:
   repository: "iuad16s1/lseg-webapp"
   pullPolicy: IfNotPresent
-  tag: "30"
+  tag: "jenkins_build_number"
 
 nameOverride: ""
 fullnameOverride: ""
