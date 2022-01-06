@@ -69,7 +69,7 @@ spec:
                 --insecure \
                 --skip-tls-verify \
                 --destination iuad16s1/lseg-webapp:$BUILD_NUMBER \
-                --destination iuad16s1/lseg-webapp:latest
+                --destination iuad16s1/lseg-webapp:$BUILD_NUMBER-latest
             '''
           }
         }
