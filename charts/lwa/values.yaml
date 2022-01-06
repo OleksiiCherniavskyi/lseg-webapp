@@ -2,7 +2,7 @@ replicaCount: 4
 image:
   repository: "iuad16s1/lseg-webapp"
   pullPolicy: IfNotPresent
-  tag: "$BUILD_NUMBER"
+  tag: "30"
 
 nameOverride: ""
 fullnameOverride: ""

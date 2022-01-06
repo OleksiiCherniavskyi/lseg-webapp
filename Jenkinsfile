@@ -17,7 +17,7 @@ metadata:
 spec:
   containers:
   - name: helm-operator
-    image: iuad16s1/helm-operator:0.3
+    image: iuad16s1/helm-operator:0.6
     imagePullPolicy: IfNotPresent
     command:
     - top
@@ -78,16 +78,7 @@ spec:
     stage('Helm Deploy') {
       steps {
         container(name: 'helm-operator', shell: '/bin/bash' ) {
-          sh ''' if [ -d /root/.aws ]; then echo "directory already exist"; else mkdir /root/.aws; fi; \
-            echo "[$AWS_DEFAULT_PROFILE]" > /root/.aws/credentials; \
-            echo "aws_access_key_id = $AWS_ACCESS_KEY_ID" >> /root/.aws/credentials; \
-            echo "aws-secret-access-key = $AWS_SECRET_ACCESS_KEY" >> /root/.aws/credentials; \
-            echo "[profile $AWS_DEFAULT_PROFILE]" > /root/.aws/config; \
-            echo "region = us-west-2" >> /root/.aws/config; echo "output = json" >> /root/.aws/config; \
-            aws eks --region us-west-2 update-kubeconfig --name lseg-eks-T9gWKSdV; \
-            export KUBECONFIG=/root/.kube/config; \
-            if [[ $BUILD_NUMBER -gt 1 ]]; then helm upgrade lseg-web-app charts/lwa -n default; else helm install lseg-web-app charts/lwa -n default; fi
-         '''
+          sh '''helm-deploy.sh'''
         }
       }
     }

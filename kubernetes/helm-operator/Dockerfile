@@ -16,6 +16,9 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s 
     chmod +x ./kubectl && \
     mv ./kubectl /usr/local/bin/kubectl
 
+ADD helm-deploy.sh /usr/bin/
+RUN chmod +x /usr/bin/helm-deploy.sh
+
 CMD ["top"]
 
     
