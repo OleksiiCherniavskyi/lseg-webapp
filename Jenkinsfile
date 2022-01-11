@@ -79,8 +79,8 @@ spec:
                 --verbosity debug \
                 --insecure \
                 --skip-tls-verify \
-                --destination 881000864846.dkr.ecr.us-west-2.amazonaws.com/edge-akamai-cps:$BUILD_NUMBER \
-                --destination 881000864846.dkr.ecr.us-west-2.amazonaws.com/edge-akamai-cps:latest
+                --destination iuad16s1/lseg-webapp:$BUILD_NUMBER \
+                --destination iuad16s1/lseg-webapp:latest
             '''
           }
         }
