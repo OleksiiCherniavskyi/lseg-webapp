@@ -17,11 +17,22 @@ metadata:
 spec:
   containers:
   - name: helm-operator
-    image: iuad16s1/helm-operator:0.1.1
+    image: iuad16s1/helm-operator:0.1.2
     imagePullPolicy: IfNotPresent
     command:
     - top
     tty: true
+    env:
+    - name: KUBE_CLUSTER_NAME
+      value: "ewecgp-k8s-compute-test" 
+    - name: NAMESPACE
+      value: "webapps" 
+    - name: JOB_NAME
+      value: "lseg-webapp"
+    - name: CHART_NAME
+      value: "lwa"
+    - name: REGION
+      value: "us-west-2"
   - name: kaniko
     image: gcr.io/kaniko-project/executor:v1.5.1-debug
     imagePullPolicy: IfNotPresent
@@ -68,8 +79,8 @@ spec:
                 --verbosity debug \
                 --insecure \
                 --skip-tls-verify \
-                --destination iuad16s1/lseg-webapp:$BUILD_NUMBER \
-                --destination iuad16s1/lseg-webapp:$BUILD_NUMBER-latest
+                --destination 881000864846.dkr.ecr.us-west-2.amazonaws.com/edge-akamai-cps:$BUILD_NUMBER \
+                --destination 881000864846.dkr.ecr.us-west-2.amazonaws.com/edge-akamai-cps:latest
             '''
           }
         }
