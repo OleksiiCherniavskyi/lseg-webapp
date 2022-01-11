@@ -10,7 +10,7 @@ metadata:
     alb.ingress.kubernetes.io/backend-protocol-version: HTTP1
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:881000864846:certificate/8d76dccf-ccf1-4c2a-b4b1-09056b4db85a
     alb.ingress.kubernetes.io/healthcheck-path: "/login"
-    alb.ingress.kubernetes.io/inbound-cidrs: 185.63.117.0/29,216.251.118.195/32,173.209.95.237/32,173.209.86.150/32,185.63.119.111/32,176.126.62.59/32,216.251.118.195/32,176.126.62.189/32
+    alb.ingress.kubernetes.io/inbound-cidrs: 185.63.117.0/29,216.251.118.195/32,173.209.95.237/32,173.209.86.150/32,185.63.119.111/32,176.126.62.59/32,216.251.118.195/32,176.126.62.189/32,140.82.112.0/20,143.55.64.0/20,192.30.252.0/22,2a0a:a440::/29,2606:50c0::/32,185.199.108.0/22
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/success-codes: '200'
