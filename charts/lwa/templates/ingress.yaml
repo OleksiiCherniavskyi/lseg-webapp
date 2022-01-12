@@ -33,5 +33,4 @@ spec:
             backend:
               serviceName: {{ $fullName }}
               servicePort: {{ $svcPort }}
-  serviceAccountName: {{ .Values.serviceAccountName }}
   {{- end }}
