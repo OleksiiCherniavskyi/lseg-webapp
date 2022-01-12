@@ -9,7 +9,6 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-type: nlb-ip
 spec:
   type: {{ .Values.service.type }}
-  serviceAccountName: {{ .Values.serviceAccountName }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 80
