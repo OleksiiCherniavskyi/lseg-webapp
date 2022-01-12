@@ -17,6 +17,7 @@ rules:
       - componentstatuses
       - configmaps
       - daemonsets
+      - secrets 
       - deployments
       - events
       - endpoints
