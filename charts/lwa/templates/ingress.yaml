@@ -1,11 +1,7 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "lwa.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
 kind: Ingress
 metadata:
   name: {{ $fullName }}
@@ -20,12 +16,12 @@ metadata:
     alb.ingress.kubernetes.io/backend-protocol-version: HTTP1
     alb.ingress.kubernetes.io/healthcheck-path: /me
     alb.ingress.kubernetes.io/success-codes: '301'
-    alb.ingress.kubernetes.io/certificate-arn:  arn:aws:acm:us-west-2:033379543890:certificate/ccea104e-cb54-4e6e-b116-232fb47c1d9c 
+    alb.ingress.kubernetes.io/certificate-arn:  arn:aws:acm:us-west-2:881000864846:certificate/8d76dccf-ccf1-4c2a-b4b1-09056b4db85a 
     alb.ingress.kubernetes.io/inbound-cidrs: 0.0.0.0/0
 spec:
   tls:
   - hosts:
-    - lseg-web-app.ua-devops.com
+    - k8s-web-app.us-west-2.test.ewecgp.expedia.com
   rules:
     - http:
         paths:
