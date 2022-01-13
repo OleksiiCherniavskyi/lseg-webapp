@@ -87,7 +87,9 @@ spec:
       }
     }
     stage('Helm Deploy') {
-    input 'Do you approve deployment?'
+      input {
+        message "Do you want to start deployment?"
+      }
       steps {
         container(name: 'helm-operator', shell: '/bin/bash' ) {
           sh '''helm-deploy.sh'''
