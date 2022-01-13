@@ -1,0 +1,55 @@
+1. Create IAM user "jenkins" in AWS Console and then provide permissions to let it opportunity to read EKS config by associating the user with IAM policy that should look like the following:
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "eks:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "iam:PassedToService": "eks.amazonaws.com"
+                }
+            }
+        }
+    ]
+}
+
+Note: it should be already presented as AWS Managed policy called "AmazonEKSAdminPolicy" and if it doesn't just go ahead and create it.
+
+2. Use your aws account or role which you've used to create EKS cluster and update Kube config by performing the following command:
+
+$ aws eks update-kubeconfig --name <your-eks-cluster-name> --region <region>
+
+3. Once the above ready add your IAM user to Kube Configmap in kube-system namespace in such a way
+
+$ kubectl edit configmap aws-auth -n kube-system
+---
+  mapUsers: |
+    - groups:
+      - system:masters
+      userarn: arn:aws:iam::<account_id>:user/jenkins
+      username: jenkins
+---
+
+4. Next step would be to bind cluster-admin role to jenkins user in such a way
+
+$ kubectl create clusterrolebinding jenkins-cluster-admin-binding --clusterrole=cluster-admin --user=jenkins
+
+5. Finally we need to add user to the config map with one command using eksctl:
+
+$ eksctl create iamidentitymapping --cluster <your-eks-cluster-name> --arn arn:aws:iam::<account_id>:user/jenkins --group system:masters --username jenkins
+
+That's it!
+
+Useful docs:
+https://stackoverflow.com/questions/50791303/kubectl-error-you-must-be-logged-in-to-the-server-unauthorized-when-accessing
+

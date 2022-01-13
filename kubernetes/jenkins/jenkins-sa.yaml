@@ -48,17 +48,17 @@ rules:
   - list
   - patch
   - update
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  - configmaps 
-  verbs:
-  - get
-  - list
-  - watch
-  - update
-  - create
+#- apiGroups:
+#  - ""
+#  resources:
+#  - nodes
+#  - configmaps 
+#  verbs:
+#  - get
+#  - list
+#  - watch
+#  - update
+#  - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
